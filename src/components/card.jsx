@@ -1,24 +1,30 @@
 import React from 'react'
 
-const Card = ({setTurnWord, turnWord, wordArrPool, count, setCount}) => {
+const Card = ({setTurnWord, turnWord, wordArrPool, count, setCount, isStart, setIsStart}) => {
     console.log(wordArrPool.length);
     
     const handleHover = () => {
         // Set the current word from the pool based on the current count
-        setTurnWord(wordArrPool[count]);
+        if (count === wordArrPool.length) {
+            return
+        } else {
+            setTurnWord(wordArrPool[count]);
     
-        // Generate a new random number between 0 and wordArrPool.length - 1
-        const randomNumber = Math.floor(Math.random() * wordArrPool.length);
-    
-        // Update the count with the new random number
-        setCount(randomNumber);
+            setCount((prev) => prev + 1);
+            setIsStart(true);
+        }
+        
+    }
+
+    const handleClick = () => {
+        alert("I knew It")
     }
     
     
   return (
-    <div onMouseEnter={handleHover} className={`p-2 absolute duration-500 ${turnWord.top} ${turnWord.left}`}>
+    <div onMouseEnter={handleHover} onClick={handleClick} className={`p-2 duration-500 ${isStart && "absolute"} ${turnWord.top} ${turnWord.left}`}>
         <div className='bg-blue-500 p-5 rounded-md cursor-pointer '>
-            <p>{turnWord.text}</p>
+            <p className='font-bold uppercase'>{turnWord.text}</p>
         </div>
     </div>
   )
